@@ -21,3 +21,15 @@ function translateText() {
             alert("Error in translation. Please try again!");
         });
 }
+
+
+function swapLanguages() {
+    let applyLang = document.getElementById("apply_language");
+    let outputLang = document.getElementById("output_language");
+
+    // Swap selected values
+    let temp = applyLang.value;
+    applyLang.value = outputLang.value;
+    outputLang.value = temp;
+}
+
