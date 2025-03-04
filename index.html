@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English to Hindi Translator</title>
+</head>
+<body>
+    <div class="translator_container">
+        <h2>English to Hindi Translator</h2>
+
+        <label for="english_text">Enter English Text:</label>
+        <textarea id="english_text" rows="4" cols="40"></textarea>
+
+        <br><br>
+
+        <button onclick="translateText()">Translate to Hindi</button>
+
+        <br><br>
+
+        <label for="hindi_text">Translated Hindi Text:</label>
+        <textarea id="hindi_text" rows="4" cols="40" readonly></textarea>
+    </div>
+
+    <script>
+        function translateText() {
+            let englishText = document.getElementById("english_text").value.trim();
+
+            if (englishText === "") {
+                alert("Please enter text to translate!");
+                return;
+            }
+
+            let apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(englishText)}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    let translatedText = data[0].map(item => item[0]).join("");
+                    document.getElementById("hindi_text").value = translatedText;
+                })
+                .catch(error => {
+                    console.error("Translation Error:", error);
+                    alert("Error in translation. Please try again!");
+                });
+        }
+    </script>
+</body>
+</html>
