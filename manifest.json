@@ -1,7 +1,7 @@
 {
   "name": "Translation App",
   "short_name": "Translation",
-  "start_url": "/",
+  "start_url": "/translation/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007bff",
