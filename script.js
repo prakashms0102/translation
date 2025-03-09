@@ -39,3 +39,35 @@ if ("serviceWorker" in navigator) {
     });
   }
   
+  let deferredPrompt;
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  
+    // Create install button
+    const installButton = document.createElement("button");
+    installButton.innerHTML = `<img src="icon-192x192.png" width="24" height="24" style="margin-right: 5px;"> Install App`;
+    installButton.style.position = "fixed";
+    installButton.style.bottom = "10px";
+    installButton.style.right = "10px";
+    installButton.style.padding = "10px";
+    installButton.style.background = "#007bff";
+    installButton.style.color = "#fff";
+    installButton.style.border = "none";
+    installButton.style.borderRadius = "5px";
+    installButton.style.cursor = "pointer";
+  
+    document.body.appendChild(installButton);
+  
+    installButton.addEventListener("click", () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User installed the app");
+        }
+        deferredPrompt = null;
+        installButton.remove();
+      });
+    });
+  });
+  
